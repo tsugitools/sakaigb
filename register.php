@@ -1,7 +1,7 @@
 <?php
 
 $REGISTER_LTI = array(
-    "name" => "Sakai Gradebook Read-Only Test",
+    "name" => "Sakai Gradebook",
     "FontAwesome" => "fa-table",
     "short_name" => "SakaiGB",
     "description" => "Exercises Sakai LTI Advantage gradebook read-only view: lists all line items, details, results, roster names, and renders a gradebook table.",
@@ -11,7 +11,7 @@ $REGISTER_LTI = array(
     "languages" => array(
         "English"
     ),
-    "source_url" => "https://github.com/tsugicontrib/sakaigb",
+    "source_url" => "https://github.com/tsugitools/sakaigb",
     "placements" => array(),
     "screen_shots" => array()
 );
