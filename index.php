@@ -109,7 +109,7 @@ foreach ( $gb['lineitems'] as $li ) {
     <h4><?= htmlentities($label) ?></h4>
     <pre><?php
     if ( is_string($detail) ) {
-        echo htmlentities("Error: " . $detail);
+        echo htmlentities("Error: " . sakaigb_format_lti13_error($detail));
     } else if ( $detail ) {
         echo htmlentities(Output::safe_print_r($detail), ENT_SUBSTITUTE);
     } else {
@@ -130,7 +130,7 @@ foreach ( $gb['lineitems'] as $li ) {
     <h4><?= htmlentities($label) ?></h4>
     <pre><?php
     if ( is_string($results) ) {
-        echo htmlentities("Error: " . $results);
+        echo htmlentities("Error: " . sakaigb_format_lti13_error($results));
     } else if ( is_array($results) ) {
         echo htmlentities(Output::safe_print_r($results), ENT_SUBSTITUTE);
     } else {

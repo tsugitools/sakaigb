@@ -3,6 +3,21 @@
 /** Sakai LTI-AGS read-only gradebook extension URI */
 define('SAKAI_READONLY_URI', 'https://www.sakailms.org/spec/lti-ags/v2p0/readOnly');
 
+/** Appended when Tsugi reports missing LTI 1.3 launch / key configuration */
+define('SAKAI_LTI13_ONLY_NOTE', ' (note this is an LTI 1.3 only tool)');
+
+/**
+ * @param string|false|null $message
+ * @return string|false|null
+ */
+function sakaigb_format_lti13_error($message) {
+    if ( ! is_string($message) ) return $message;
+    $message = trim($message);
+    if ( strlen($message) === 0 ) return $message;
+    if ( stripos($message, 'LTI 1.3 only tool') !== false ) return $message;
+    return $message . SAKAI_LTI13_ONLY_NOTE;
+}
+
 /**
  * @param object $lineitem Line item from AGS
  * @return bool
@@ -96,11 +111,11 @@ function sakaigb_load_gradebook_data($LTI, &$debug_log) {
     $debug_log[] = '--- loadLineItems (full gradebook list) ---';
     $lineitems = $LTI->context->loadLineItems(false, $debug_log);
     if ( is_string($lineitems) ) {
-        $data['error'] = $lineitems;
+        $data['error'] = sakaigb_format_lti13_error($lineitems);
         return $data;
     }
     if ( ! is_array($lineitems) ) {
-        $data['error'] = 'Line items response was not an array';
+        $data['error'] = sakaigb_format_lti13_error('Line items response was not an array');
         return $data;
     }
 
@@ -145,7 +160,7 @@ function sakaigb_load_gradebook_data($LTI, &$debug_log) {
     $debug_log[] = '--- loadNamesAndRoles ---';
     $nrps = $LTI->context->loadNamesAndRoles(false, $debug_log);
     if ( is_string($nrps) ) {
-        $data['nrps_error'] = $nrps;
+        $data['nrps_error'] = sakaigb_format_lti13_error($nrps);
     } else {
         $data['nrps'] = $nrps;
         if ( is_object($nrps) && isset($nrps->members) && is_array($nrps->members) ) {
